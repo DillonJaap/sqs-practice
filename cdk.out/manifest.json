@@ -1,0 +1,178 @@
+{
+  "version": "31.0.0",
+  "artifacts": {
+    "SqsPractice.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "SqsPractice.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "SqsPractice": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://000000000000/us-east-1",
+      "properties": {
+        "templateFile": "SqsPractice.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-deploy-role-000000000000-us-east-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-cfn-exec-role-000000000000-us-east-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-000000000000-us-east-1/ad7472ea89841f5f94d6f9874cbc99d7e8222bf1d96b8ab57760ba59f55fb2aa.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "SqsPractice.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::000000000000:role/cdk-hnb659fds-lookup-role-000000000000-us-east-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "SqsPractice.assets"
+      ],
+      "metadata": {
+        "/SqsPractice/SqsPractice/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SqsPracticeServiceRoleEFE2E7F8"
+          }
+        ],
+        "/SqsPractice/SqsPractice/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SqsPracticeCB75CD47"
+          }
+        ],
+        "/SqsPractice/rest-api/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapi39D779F7"
+          }
+        ],
+        "/SqsPractice/rest-api/CloudWatchRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiCloudWatchRole2D9E2F10"
+          }
+        ],
+        "/SqsPractice/rest-api/Account": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiAccountC2304339"
+          }
+        ],
+        "/SqsPractice/rest-api/Deployment/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiDeploymentD3722A4Ccd28319054cd6ada71c40a97924f529f"
+          }
+        ],
+        "/SqsPractice/rest-api/DeploymentStage.prod/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiDeploymentStageprod0335F613"
+          }
+        ],
+        "/SqsPractice/rest-api/Endpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiEndpointC67DEFEA"
+          }
+        ],
+        "/SqsPractice/rest-api/Default/{proxy+}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiproxyD63C125B"
+          }
+        ],
+        "/SqsPractice/rest-api/Default/{proxy+}/ANY/ApiPermission.SqsPracticerestapi2CD4BA7F.ANY..{proxy+}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiproxyANYApiPermissionSqsPracticerestapi2CD4BA7FANYproxy65B5448E"
+          }
+        ],
+        "/SqsPractice/rest-api/Default/{proxy+}/ANY/ApiPermission.Test.SqsPracticerestapi2CD4BA7F.ANY..{proxy+}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiproxyANYApiPermissionTestSqsPracticerestapi2CD4BA7FANYproxy1A74AFC8"
+          }
+        ],
+        "/SqsPractice/rest-api/Default/{proxy+}/ANY/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiproxyANY86DB073A"
+          }
+        ],
+        "/SqsPractice/rest-api/Default/ANY/ApiPermission.SqsPracticerestapi2CD4BA7F.ANY..": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiANYApiPermissionSqsPracticerestapi2CD4BA7FANYF7197EE5"
+          }
+        ],
+        "/SqsPractice/rest-api/Default/ANY/ApiPermission.Test.SqsPracticerestapi2CD4BA7F.ANY..": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiANYApiPermissionTestSqsPracticerestapi2CD4BA7FANYCF03BF61"
+          }
+        ],
+        "/SqsPractice/rest-api/Default/ANY/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiANYA270F193"
+          }
+        ],
+        "/SqsPractice/rest-api/Default/endpoints/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiendpoints52B21B68"
+          }
+        ],
+        "/SqsPractice/rest-api/Default/endpoints/GET/ApiPermission.SqsPracticerestapi2CD4BA7F.GET..endpoints": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiendpointsGETApiPermissionSqsPracticerestapi2CD4BA7FGETendpoints70764611"
+          }
+        ],
+        "/SqsPractice/rest-api/Default/endpoints/GET/ApiPermission.Test.SqsPracticerestapi2CD4BA7F.GET..endpoints": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiendpointsGETApiPermissionTestSqsPracticerestapi2CD4BA7FGETendpoints2D8A2734"
+          }
+        ],
+        "/SqsPractice/rest-api/Default/endpoints/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiendpointsGET46FEF139"
+          }
+        ],
+        "/SqsPractice/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/SqsPractice/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/SqsPractice/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "SqsPractice"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

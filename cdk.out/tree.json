@@ -1,0 +1,824 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "SqsPractice": {
+        "id": "SqsPractice",
+        "path": "SqsPractice",
+        "children": {
+          "SqsPractice": {
+            "id": "SqsPractice",
+            "path": "SqsPractice/SqsPractice",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "SqsPractice/SqsPractice/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "SqsPractice/SqsPractice/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.77.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "SqsPractice/SqsPractice/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.77.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.77.0"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "SqsPractice/SqsPractice/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "SqsPractice/SqsPractice/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.77.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "SqsPractice/SqsPractice/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.77.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.77.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "SqsPractice/SqsPractice/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": "cdk-hnb659fds-assets-000000000000-us-east-1",
+                      "s3Key": "4a1e37ff70eaddc57f35f0e874dfd1a4d77e338c2445405116f0d8cd27428287.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "SqsPracticeServiceRoleEFE2E7F8",
+                        "Arn"
+                      ]
+                    },
+                    "functionName": "testLambda",
+                    "handler": "main",
+                    "runtime": "provided.al2"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.77.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.77.0"
+            }
+          },
+          "rest-api": {
+            "id": "rest-api",
+            "path": "SqsPractice/rest-api",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "SqsPractice/rest-api/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ApiGateway::RestApi",
+                  "aws:cdk:cloudformation:props": {
+                    "name": "rest-api"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.CfnRestApi",
+                  "version": "2.77.0"
+                }
+              },
+              "CloudWatchRole": {
+                "id": "CloudWatchRole",
+                "path": "SqsPractice/rest-api/CloudWatchRole",
+                "children": {
+                  "ImportCloudWatchRole": {
+                    "id": "ImportCloudWatchRole",
+                    "path": "SqsPractice/rest-api/CloudWatchRole/ImportCloudWatchRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.77.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "SqsPractice/rest-api/CloudWatchRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "apigateway.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.77.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.77.0"
+                }
+              },
+              "Account": {
+                "id": "Account",
+                "path": "SqsPractice/rest-api/Account",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ApiGateway::Account",
+                  "aws:cdk:cloudformation:props": {
+                    "cloudWatchRoleArn": {
+                      "Fn::GetAtt": [
+                        "restapiCloudWatchRole2D9E2F10",
+                        "Arn"
+                      ]
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.CfnAccount",
+                  "version": "2.77.0"
+                }
+              },
+              "Deployment": {
+                "id": "Deployment",
+                "path": "SqsPractice/rest-api/Deployment",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "SqsPractice/rest-api/Deployment/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGateway::Deployment",
+                      "aws:cdk:cloudformation:props": {
+                        "restApiId": {
+                          "Ref": "restapi39D779F7"
+                        },
+                        "description": "Automatically created by the RestApi construct"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.CfnDeployment",
+                      "version": "2.77.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.Deployment",
+                  "version": "2.77.0"
+                }
+              },
+              "DeploymentStage.prod": {
+                "id": "DeploymentStage.prod",
+                "path": "SqsPractice/rest-api/DeploymentStage.prod",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "SqsPractice/rest-api/DeploymentStage.prod/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGateway::Stage",
+                      "aws:cdk:cloudformation:props": {
+                        "restApiId": {
+                          "Ref": "restapi39D779F7"
+                        },
+                        "deploymentId": {
+                          "Ref": "restapiDeploymentD3722A4Ccd28319054cd6ada71c40a97924f529f"
+                        },
+                        "stageName": "prod"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.CfnStage",
+                      "version": "2.77.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.Stage",
+                  "version": "2.77.0"
+                }
+              },
+              "Endpoint": {
+                "id": "Endpoint",
+                "path": "SqsPractice/rest-api/Endpoint",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.77.0"
+                }
+              },
+              "Default": {
+                "id": "Default",
+                "path": "SqsPractice/rest-api/Default",
+                "children": {
+                  "{proxy+}": {
+                    "id": "{proxy+}",
+                    "path": "SqsPractice/rest-api/Default/{proxy+}",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "SqsPractice/rest-api/Default/{proxy+}/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGateway::Resource",
+                          "aws:cdk:cloudformation:props": {
+                            "parentId": {
+                              "Fn::GetAtt": [
+                                "restapi39D779F7",
+                                "RootResourceId"
+                              ]
+                            },
+                            "pathPart": "{proxy+}",
+                            "restApiId": {
+                              "Ref": "restapi39D779F7"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.CfnResource",
+                          "version": "2.77.0"
+                        }
+                      },
+                      "ANY": {
+                        "id": "ANY",
+                        "path": "SqsPractice/rest-api/Default/{proxy+}/ANY",
+                        "children": {
+                          "ApiPermission.SqsPracticerestapi2CD4BA7F.ANY..{proxy+}": {
+                            "id": "ApiPermission.SqsPracticerestapi2CD4BA7F.ANY..{proxy+}",
+                            "path": "SqsPractice/rest-api/Default/{proxy+}/ANY/ApiPermission.SqsPracticerestapi2CD4BA7F.ANY..{proxy+}",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                              "aws:cdk:cloudformation:props": {
+                                "action": "lambda:InvokeFunction",
+                                "functionName": {
+                                  "Fn::GetAtt": [
+                                    "SqsPracticeCB75CD47",
+                                    "Arn"
+                                  ]
+                                },
+                                "principal": "apigateway.amazonaws.com",
+                                "sourceArn": {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      "arn:",
+                                      {
+                                        "Ref": "AWS::Partition"
+                                      },
+                                      ":execute-api:us-east-1:000000000000:",
+                                      {
+                                        "Ref": "restapi39D779F7"
+                                      },
+                                      "/",
+                                      {
+                                        "Ref": "restapiDeploymentStageprod0335F613"
+                                      },
+                                      "/*/*"
+                                    ]
+                                  ]
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                              "version": "2.77.0"
+                            }
+                          },
+                          "ApiPermission.Test.SqsPracticerestapi2CD4BA7F.ANY..{proxy+}": {
+                            "id": "ApiPermission.Test.SqsPracticerestapi2CD4BA7F.ANY..{proxy+}",
+                            "path": "SqsPractice/rest-api/Default/{proxy+}/ANY/ApiPermission.Test.SqsPracticerestapi2CD4BA7F.ANY..{proxy+}",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                              "aws:cdk:cloudformation:props": {
+                                "action": "lambda:InvokeFunction",
+                                "functionName": {
+                                  "Fn::GetAtt": [
+                                    "SqsPracticeCB75CD47",
+                                    "Arn"
+                                  ]
+                                },
+                                "principal": "apigateway.amazonaws.com",
+                                "sourceArn": {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      "arn:",
+                                      {
+                                        "Ref": "AWS::Partition"
+                                      },
+                                      ":execute-api:us-east-1:000000000000:",
+                                      {
+                                        "Ref": "restapi39D779F7"
+                                      },
+                                      "/test-invoke-stage/*/*"
+                                    ]
+                                  ]
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                              "version": "2.77.0"
+                            }
+                          },
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "SqsPractice/rest-api/Default/{proxy+}/ANY/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
+                              "aws:cdk:cloudformation:props": {
+                                "httpMethod": "ANY",
+                                "resourceId": {
+                                  "Ref": "restapiproxyD63C125B"
+                                },
+                                "restApiId": {
+                                  "Ref": "restapi39D779F7"
+                                },
+                                "authorizationType": "NONE",
+                                "integration": {
+                                  "type": "AWS_PROXY",
+                                  "uri": {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+                                        {
+                                          "Fn::GetAtt": [
+                                            "SqsPracticeCB75CD47",
+                                            "Arn"
+                                          ]
+                                        },
+                                        "/invocations"
+                                      ]
+                                    ]
+                                  },
+                                  "integrationHttpMethod": "POST"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_apigateway.CfnMethod",
+                              "version": "2.77.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.Method",
+                          "version": "2.77.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.ProxyResource",
+                      "version": "2.77.0"
+                    }
+                  },
+                  "ANY": {
+                    "id": "ANY",
+                    "path": "SqsPractice/rest-api/Default/ANY",
+                    "children": {
+                      "ApiPermission.SqsPracticerestapi2CD4BA7F.ANY..": {
+                        "id": "ApiPermission.SqsPracticerestapi2CD4BA7F.ANY..",
+                        "path": "SqsPractice/rest-api/Default/ANY/ApiPermission.SqsPracticerestapi2CD4BA7F.ANY..",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                          "aws:cdk:cloudformation:props": {
+                            "action": "lambda:InvokeFunction",
+                            "functionName": {
+                              "Fn::GetAtt": [
+                                "SqsPracticeCB75CD47",
+                                "Arn"
+                              ]
+                            },
+                            "principal": "apigateway.amazonaws.com",
+                            "sourceArn": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  "arn:",
+                                  {
+                                    "Ref": "AWS::Partition"
+                                  },
+                                  ":execute-api:us-east-1:000000000000:",
+                                  {
+                                    "Ref": "restapi39D779F7"
+                                  },
+                                  "/",
+                                  {
+                                    "Ref": "restapiDeploymentStageprod0335F613"
+                                  },
+                                  "/*/"
+                                ]
+                              ]
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                          "version": "2.77.0"
+                        }
+                      },
+                      "ApiPermission.Test.SqsPracticerestapi2CD4BA7F.ANY..": {
+                        "id": "ApiPermission.Test.SqsPracticerestapi2CD4BA7F.ANY..",
+                        "path": "SqsPractice/rest-api/Default/ANY/ApiPermission.Test.SqsPracticerestapi2CD4BA7F.ANY..",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                          "aws:cdk:cloudformation:props": {
+                            "action": "lambda:InvokeFunction",
+                            "functionName": {
+                              "Fn::GetAtt": [
+                                "SqsPracticeCB75CD47",
+                                "Arn"
+                              ]
+                            },
+                            "principal": "apigateway.amazonaws.com",
+                            "sourceArn": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  "arn:",
+                                  {
+                                    "Ref": "AWS::Partition"
+                                  },
+                                  ":execute-api:us-east-1:000000000000:",
+                                  {
+                                    "Ref": "restapi39D779F7"
+                                  },
+                                  "/test-invoke-stage/*/"
+                                ]
+                              ]
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                          "version": "2.77.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "SqsPractice/rest-api/Default/ANY/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
+                          "aws:cdk:cloudformation:props": {
+                            "httpMethod": "ANY",
+                            "resourceId": {
+                              "Fn::GetAtt": [
+                                "restapi39D779F7",
+                                "RootResourceId"
+                              ]
+                            },
+                            "restApiId": {
+                              "Ref": "restapi39D779F7"
+                            },
+                            "authorizationType": "NONE",
+                            "integration": {
+                              "type": "AWS_PROXY",
+                              "uri": {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+                                    {
+                                      "Fn::GetAtt": [
+                                        "SqsPracticeCB75CD47",
+                                        "Arn"
+                                      ]
+                                    },
+                                    "/invocations"
+                                  ]
+                                ]
+                              },
+                              "integrationHttpMethod": "POST"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.CfnMethod",
+                          "version": "2.77.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.Method",
+                      "version": "2.77.0"
+                    }
+                  },
+                  "endpoints": {
+                    "id": "endpoints",
+                    "path": "SqsPractice/rest-api/Default/endpoints",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "SqsPractice/rest-api/Default/endpoints/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGateway::Resource",
+                          "aws:cdk:cloudformation:props": {
+                            "parentId": {
+                              "Fn::GetAtt": [
+                                "restapi39D779F7",
+                                "RootResourceId"
+                              ]
+                            },
+                            "pathPart": "endpoints",
+                            "restApiId": {
+                              "Ref": "restapi39D779F7"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.CfnResource",
+                          "version": "2.77.0"
+                        }
+                      },
+                      "GET": {
+                        "id": "GET",
+                        "path": "SqsPractice/rest-api/Default/endpoints/GET",
+                        "children": {
+                          "ApiPermission.SqsPracticerestapi2CD4BA7F.GET..endpoints": {
+                            "id": "ApiPermission.SqsPracticerestapi2CD4BA7F.GET..endpoints",
+                            "path": "SqsPractice/rest-api/Default/endpoints/GET/ApiPermission.SqsPracticerestapi2CD4BA7F.GET..endpoints",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                              "aws:cdk:cloudformation:props": {
+                                "action": "lambda:InvokeFunction",
+                                "functionName": {
+                                  "Fn::GetAtt": [
+                                    "SqsPracticeCB75CD47",
+                                    "Arn"
+                                  ]
+                                },
+                                "principal": "apigateway.amazonaws.com",
+                                "sourceArn": {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      "arn:",
+                                      {
+                                        "Ref": "AWS::Partition"
+                                      },
+                                      ":execute-api:us-east-1:000000000000:",
+                                      {
+                                        "Ref": "restapi39D779F7"
+                                      },
+                                      "/",
+                                      {
+                                        "Ref": "restapiDeploymentStageprod0335F613"
+                                      },
+                                      "/GET/endpoints"
+                                    ]
+                                  ]
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                              "version": "2.77.0"
+                            }
+                          },
+                          "ApiPermission.Test.SqsPracticerestapi2CD4BA7F.GET..endpoints": {
+                            "id": "ApiPermission.Test.SqsPracticerestapi2CD4BA7F.GET..endpoints",
+                            "path": "SqsPractice/rest-api/Default/endpoints/GET/ApiPermission.Test.SqsPracticerestapi2CD4BA7F.GET..endpoints",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                              "aws:cdk:cloudformation:props": {
+                                "action": "lambda:InvokeFunction",
+                                "functionName": {
+                                  "Fn::GetAtt": [
+                                    "SqsPracticeCB75CD47",
+                                    "Arn"
+                                  ]
+                                },
+                                "principal": "apigateway.amazonaws.com",
+                                "sourceArn": {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      "arn:",
+                                      {
+                                        "Ref": "AWS::Partition"
+                                      },
+                                      ":execute-api:us-east-1:000000000000:",
+                                      {
+                                        "Ref": "restapi39D779F7"
+                                      },
+                                      "/test-invoke-stage/GET/endpoints"
+                                    ]
+                                  ]
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                              "version": "2.77.0"
+                            }
+                          },
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "SqsPractice/rest-api/Default/endpoints/GET/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
+                              "aws:cdk:cloudformation:props": {
+                                "httpMethod": "GET",
+                                "resourceId": {
+                                  "Ref": "restapiendpoints52B21B68"
+                                },
+                                "restApiId": {
+                                  "Ref": "restapi39D779F7"
+                                },
+                                "authorizationType": "NONE",
+                                "integration": {
+                                  "type": "AWS_PROXY",
+                                  "uri": {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+                                        {
+                                          "Fn::GetAtt": [
+                                            "SqsPracticeCB75CD47",
+                                            "Arn"
+                                          ]
+                                        },
+                                        "/invocations"
+                                      ]
+                                    ]
+                                  },
+                                  "integrationHttpMethod": "POST"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_apigateway.CfnMethod",
+                              "version": "2.77.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.Method",
+                          "version": "2.77.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.Resource",
+                      "version": "2.77.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.ResourceBase",
+                  "version": "2.77.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_apigateway.LambdaRestApi",
+              "version": "2.77.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "SqsPractice/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "SqsPractice/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.77.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.270"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "SqsPractice/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.77.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "SqsPractice/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.77.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.77.0"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.1.270"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.77.0"
+    }
+  }
+}

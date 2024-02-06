@@ -1,0 +1,593 @@
+{
+ "Resources": {
+  "SqsPracticeServiceRoleEFE2E7F8": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SqsPractice/SqsPractice/ServiceRole/Resource"
+   }
+  },
+  "SqsPracticeCB75CD47": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-000000000000-us-east-1",
+     "S3Key": "4a1e37ff70eaddc57f35f0e874dfd1a4d77e338c2445405116f0d8cd27428287.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "SqsPracticeServiceRoleEFE2E7F8",
+      "Arn"
+     ]
+    },
+    "FunctionName": "testLambda",
+    "Handler": "main",
+    "Runtime": "provided.al2"
+   },
+   "DependsOn": [
+    "SqsPracticeServiceRoleEFE2E7F8"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "SqsPractice/SqsPractice/Resource",
+    "aws:asset:path": "asset.4a1e37ff70eaddc57f35f0e874dfd1a4d77e338c2445405116f0d8cd27428287.zip",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "restapi39D779F7": {
+   "Type": "AWS::ApiGateway::RestApi",
+   "Properties": {
+    "Name": "rest-api"
+   },
+   "Metadata": {
+    "aws:cdk:path": "SqsPractice/rest-api/Resource"
+   }
+  },
+  "restapiCloudWatchRole2D9E2F10": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "apigateway.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+       ]
+      ]
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "SqsPractice/rest-api/CloudWatchRole/Resource"
+   }
+  },
+  "restapiAccountC2304339": {
+   "Type": "AWS::ApiGateway::Account",
+   "Properties": {
+    "CloudWatchRoleArn": {
+     "Fn::GetAtt": [
+      "restapiCloudWatchRole2D9E2F10",
+      "Arn"
+     ]
+    }
+   },
+   "DependsOn": [
+    "restapi39D779F7"
+   ],
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "SqsPractice/rest-api/Account"
+   }
+  },
+  "restapiDeploymentD3722A4Ccd28319054cd6ada71c40a97924f529f": {
+   "Type": "AWS::ApiGateway::Deployment",
+   "Properties": {
+    "RestApiId": {
+     "Ref": "restapi39D779F7"
+    },
+    "Description": "Automatically created by the RestApi construct"
+   },
+   "DependsOn": [
+    "restapiproxyANY86DB073A",
+    "restapiproxyD63C125B",
+    "restapiANYA270F193",
+    "restapiendpointsGET46FEF139",
+    "restapiendpoints52B21B68"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "SqsPractice/rest-api/Deployment/Resource"
+   }
+  },
+  "restapiDeploymentStageprod0335F613": {
+   "Type": "AWS::ApiGateway::Stage",
+   "Properties": {
+    "RestApiId": {
+     "Ref": "restapi39D779F7"
+    },
+    "DeploymentId": {
+     "Ref": "restapiDeploymentD3722A4Ccd28319054cd6ada71c40a97924f529f"
+    },
+    "StageName": "prod"
+   },
+   "DependsOn": [
+    "restapiAccountC2304339"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "SqsPractice/rest-api/DeploymentStage.prod/Resource"
+   }
+  },
+  "restapiproxyD63C125B": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "restapi39D779F7",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "{proxy+}",
+    "RestApiId": {
+     "Ref": "restapi39D779F7"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SqsPractice/rest-api/Default/{proxy+}/Resource"
+   }
+  },
+  "restapiproxyANYApiPermissionSqsPracticerestapi2CD4BA7FANYproxy65B5448E": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "SqsPracticeCB75CD47",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:000000000000:",
+       {
+        "Ref": "restapi39D779F7"
+       },
+       "/",
+       {
+        "Ref": "restapiDeploymentStageprod0335F613"
+       },
+       "/*/*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SqsPractice/rest-api/Default/{proxy+}/ANY/ApiPermission.SqsPracticerestapi2CD4BA7F.ANY..{proxy+}"
+   }
+  },
+  "restapiproxyANYApiPermissionTestSqsPracticerestapi2CD4BA7FANYproxy1A74AFC8": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "SqsPracticeCB75CD47",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:000000000000:",
+       {
+        "Ref": "restapi39D779F7"
+       },
+       "/test-invoke-stage/*/*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SqsPractice/rest-api/Default/{proxy+}/ANY/ApiPermission.Test.SqsPracticerestapi2CD4BA7F.ANY..{proxy+}"
+   }
+  },
+  "restapiproxyANY86DB073A": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "HttpMethod": "ANY",
+    "ResourceId": {
+     "Ref": "restapiproxyD63C125B"
+    },
+    "RestApiId": {
+     "Ref": "restapi39D779F7"
+    },
+    "AuthorizationType": "NONE",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "SqsPracticeCB75CD47",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SqsPractice/rest-api/Default/{proxy+}/ANY/Resource"
+   }
+  },
+  "restapiANYApiPermissionSqsPracticerestapi2CD4BA7FANYF7197EE5": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "SqsPracticeCB75CD47",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:000000000000:",
+       {
+        "Ref": "restapi39D779F7"
+       },
+       "/",
+       {
+        "Ref": "restapiDeploymentStageprod0335F613"
+       },
+       "/*/"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SqsPractice/rest-api/Default/ANY/ApiPermission.SqsPracticerestapi2CD4BA7F.ANY.."
+   }
+  },
+  "restapiANYApiPermissionTestSqsPracticerestapi2CD4BA7FANYCF03BF61": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "SqsPracticeCB75CD47",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:000000000000:",
+       {
+        "Ref": "restapi39D779F7"
+       },
+       "/test-invoke-stage/*/"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SqsPractice/rest-api/Default/ANY/ApiPermission.Test.SqsPracticerestapi2CD4BA7F.ANY.."
+   }
+  },
+  "restapiANYA270F193": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "HttpMethod": "ANY",
+    "ResourceId": {
+     "Fn::GetAtt": [
+      "restapi39D779F7",
+      "RootResourceId"
+     ]
+    },
+    "RestApiId": {
+     "Ref": "restapi39D779F7"
+    },
+    "AuthorizationType": "NONE",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "SqsPracticeCB75CD47",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SqsPractice/rest-api/Default/ANY/Resource"
+   }
+  },
+  "restapiendpoints52B21B68": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "restapi39D779F7",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "endpoints",
+    "RestApiId": {
+     "Ref": "restapi39D779F7"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SqsPractice/rest-api/Default/endpoints/Resource"
+   }
+  },
+  "restapiendpointsGETApiPermissionSqsPracticerestapi2CD4BA7FGETendpoints70764611": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "SqsPracticeCB75CD47",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:000000000000:",
+       {
+        "Ref": "restapi39D779F7"
+       },
+       "/",
+       {
+        "Ref": "restapiDeploymentStageprod0335F613"
+       },
+       "/GET/endpoints"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SqsPractice/rest-api/Default/endpoints/GET/ApiPermission.SqsPracticerestapi2CD4BA7F.GET..endpoints"
+   }
+  },
+  "restapiendpointsGETApiPermissionTestSqsPracticerestapi2CD4BA7FGETendpoints2D8A2734": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "SqsPracticeCB75CD47",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:000000000000:",
+       {
+        "Ref": "restapi39D779F7"
+       },
+       "/test-invoke-stage/GET/endpoints"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SqsPractice/rest-api/Default/endpoints/GET/ApiPermission.Test.SqsPracticerestapi2CD4BA7F.GET..endpoints"
+   }
+  },
+  "restapiendpointsGET46FEF139": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "HttpMethod": "GET",
+    "ResourceId": {
+     "Ref": "restapiendpoints52B21B68"
+    },
+    "RestApiId": {
+     "Ref": "restapi39D779F7"
+    },
+    "AuthorizationType": "NONE",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "SqsPracticeCB75CD47",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SqsPractice/rest-api/Default/endpoints/GET/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/02OwU7DMBBEv6V3Z0spouKYgnoqogofUG2dJV0S21FsK0RR/h3baSGneTNrz+4j7HbwsMLeZrKss4YvMH46lLUI0XlsUF1KhPHgtXRstHj90ks+UafY2uAmwahgLExDcRB1EnZ7RmvJWcijBA97L2tye7QksOUKHfU4wHhMiwqyLm85FfxjLqXx2ok3ahszKAoY0oULB1dp6wzhq/GdpLTk1Jmf4Z7cimd+J3c1ZYxudJ9M0x+KdHesZV3Fpx/etd4teyZRmQ1sXmC7LrHrWa9Rlc9Pq2/LnHXhblYExay/ggmOi24BAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "SqsPractice/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "restapiEndpointC67DEFEA": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Ref": "restapi39D779F7"
+      },
+      ".execute-api.us-east-1.",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/",
+      {
+       "Ref": "restapiDeploymentStageprod0335F613"
+      },
+      "/"
+     ]
+    ]
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
